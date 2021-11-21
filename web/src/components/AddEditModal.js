@@ -48,11 +48,10 @@ function EditText() {
     )
 }
 
-export default function AddEditModal({ mode }) {
+export default function AddEditModal({ open, mode }) {
   useEffect(()=>{}, [ mode ])
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => null;
+  const handleClose = () => null;
 
   return (
     <div>
