@@ -23,6 +23,20 @@ export default function ListContainer() {
         
         // setIsFetching(false)
     }
+
+    function handleOpen( mode ) {
+        setModal({
+            isOpen: true,
+            mode
+        })
+    }
+
+    function handleClose() {
+        setModal({
+            isOpen:false
+        })
+    }
+
     return (
         <>
             {
@@ -42,8 +56,8 @@ export default function ListContainer() {
                     marginTop: '100px' 
                 }}>
                 <Typography variant="h6" sx={{color:'gray', marginBottom: '10px'}}>Your shopping list is empty :(</Typography>
-                <Button variant="contained">Add your first item</Button>
-                <AddEditModal mode={modal.mode} open={modal.isOpen} />
+                <Button onClick={() => handleOpen('ADD')} variant="contained">Add your first item</Button>
+                <AddEditModal mode={modal.mode} open={modal.isOpen} handleClose={handleClose} />
                 </Box>
             )
         }

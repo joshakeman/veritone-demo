@@ -48,14 +48,11 @@ function EditText() {
     )
 }
 
-export default function AddEditModal({ open, mode }) {
-  useEffect(()=>{}, [ mode ])
-  const handleOpen = () => null;
-  const handleClose = () => null;
+export default function AddEditModal({ open, mode, handleClose }) {
+  useEffect(()=>{}, [ mode ]);
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -77,7 +74,7 @@ export default function AddEditModal({ open, mode }) {
                         <EditText />
                     )
                 }
-                <Stack direction="column" justifyContent="space-between">
+                <Stack sx={{height: '100%'}} direction="column" justifyContent="space-between">
                     <Stack sx={{height: '100%'}}direction="column">
                         <TextField sx={{ margin: '8px 0 '}} label="Item name" variant="outlined" />
                         <TextField sx={{ margin: '8px 0 '}} label="Description" variant="outlined" multiline minRows={4}/>
@@ -95,7 +92,7 @@ export default function AddEditModal({ open, mode }) {
                         </FormControl>
                     </Stack>
                     <Stack direction="row" justifyContent="flex-end">
-                        <Button sx={{color:'black'}}>Cancel</Button>
+                        <Button onClick={handleClose} sx={{color:'black'}}>Cancel</Button>
                         <Button variant="contained">
                         {
                             mode === 'ADD' ? (
