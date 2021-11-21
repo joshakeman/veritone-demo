@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -22,7 +22,34 @@ const style = {
   bgcolor: 'background.paper',
 };
 
-export default function BasicModal() {
+function AddText() {
+    return (
+        <div>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+                Add an Item
+            </Typography>
+            <Typography id="modal-modal-title" variant="body1" component="h3">
+                Add your new item below
+            </Typography>
+        </div>
+    )
+}
+
+function EditText() {
+    return (
+        <div>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+                Edit an Item
+            </Typography>
+            <Typography id="modal-modal-title" variant="body1" component="h3">
+                Edit your item below
+            </Typography>
+        </div>
+    )
+}
+
+export default function AddEditModal({ mode }) {
+  useEffect(()=>{}, [ mode ])
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -44,14 +71,13 @@ export default function BasicModal() {
                 <ArrowForwardIosIcon />
             </Stack>
             <Stack sx={{ p: 2, height: '480px' }} direction="column" justifyContent="space-between">
-                <div>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Add an Item
-                    </Typography>
-                    <Typography id="modal-modal-title" variant="body1" component="h3">
-                        Add your new item below
-                    </Typography>
-                </div>
+                {
+                    mode === 'ADD' ? (
+                        <AddText />
+                    ) : (
+                        <EditText />
+                    )
+                }
                 <Stack direction="column" justifyContent="space-between">
                     <Stack sx={{height: '100%'}}direction="column">
                         <TextField sx={{ margin: '8px 0 '}} label="Item name" variant="outlined" />
@@ -71,7 +97,15 @@ export default function BasicModal() {
                     </Stack>
                     <Stack direction="row" justifyContent="flex-end">
                         <Button sx={{color:'black'}}>Cancel</Button>
-                        <Button variant="contained">Add Task</Button>
+                        <Button variant="contained">
+                        {
+                            mode === 'ADD' ? (
+                                <>Add Task</>
+                            ) : (
+                                <>Save Item</>
+                            )
+                        }
+                        </Button>
                     </Stack>
                 </Stack>
             </Stack>
