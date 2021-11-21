@@ -27,12 +27,12 @@ export default function ItemList({ items }) {
 
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-      {items.map((value) => {
-        const labelId = `checkbox-list-label-${value}`;
+      {items.map((item) => {
+        const labelId = `checkbox-list-label-${item}`;
 
         return (
           <ListItem
-            key={value}
+            key={item.uuid}
             secondaryAction={
               <IconButton edge="end" aria-label="comments">
                 <ModeEditIcon />
@@ -46,17 +46,17 @@ export default function ItemList({ items }) {
             }}
             disablePadding
           >
-            <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
+            <ListItemButton role={undefined} onClick={handleToggle(item.name)} dense>
               <ListItemIcon>
                 <Checkbox
                   edge="start"
-                  checked={checked.indexOf(value) !== -1}
+                  checked={checked.indexOf(item.name) !== -1}
                   tabIndex={-1}
                   disableRipple
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`Line item ${value + 1}`} primaryTypographyProps={{variant:"h6"}} secondaryTypographyProps={{variant:"body2"}} secondary={<ListItemText >Description of Item</ListItemText>} />
+              <ListItemText id={labelId} primary={item.name} primaryTypographyProps={{variant:"h6"}} secondaryTypographyProps={{variant:"body2"}} secondary={<ListItemText >{item.description}</ListItemText>} />
             </ListItemButton>
           </ListItem>
         );

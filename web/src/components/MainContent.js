@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
-import AddEditModal from './AddEditModal';
 import ItemList from './ItemList';
 
 export default function MainContent({ items, modal, handleOpen, handleClose }) {
@@ -27,7 +26,6 @@ export default function MainContent({ items, modal, handleOpen, handleClose }) {
                 }}>
                     <Typography variant="h6" sx={{color:'gray', marginBottom: '10px'}}>Your shopping list is empty :(</Typography>
                     <Button onClick={() => handleOpen('ADD')} variant="contained">Add your first item</Button>
-                    <AddEditModal mode={modal.mode} open={modal.isOpen} handleClose={handleClose} />
                 </Box>
             ) : (
                 <Container sx={{width:'1000px'}}>

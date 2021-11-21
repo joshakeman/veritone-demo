@@ -48,7 +48,7 @@ function EditText() {
     )
 }
 
-export default function AddEditModal({ open, mode, handleClose }) {
+export default function AddEditModal({ open, mode, handleClose, inputs, onChangeHandler }) {
   useEffect(()=>{}, [ mode ]);
 
   return (
@@ -76,18 +76,21 @@ export default function AddEditModal({ open, mode, handleClose }) {
                 }
                 <Stack sx={{height: '100%'}} direction="column" justifyContent="space-between">
                     <Stack sx={{height: '100%'}}direction="column">
-                        <TextField sx={{ margin: '8px 0 '}} label="Item name" variant="outlined" />
-                        <TextField sx={{ margin: '8px 0 '}} label="Description" variant="outlined" multiline minRows={4}/>
+                        <TextField value={inputs.name} name="name" onChange={onChangeHandler} sx={{ margin: '8px 0 '}} label="Item name" variant="outlined" />
+                        <TextField value={inputs.description} name="description" onChange={onChangeHandler} sx={{ margin: '8px 0 '}} label="Description" variant="outlined" multiline minRows={4}/>
                         <FormControl fullWidth>
                             <Select
                             sx={{ margin: '8px 0 '}}
-                            // value={age}
+                            name="amount"
+                            value={inputs.amount}
                             label="How many?"
-                            // onChange={handleChange}
+                            onChange={onChangeHandler}
                             >
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
+                            <MenuItem value={1}>1</MenuItem>
+                            <MenuItem value={2}>2</MenuItem>
+                            <MenuItem value={3}>3</MenuItem>
+                            <MenuItem value={4}>4</MenuItem>
+                            <MenuItem value={5}>5</MenuItem>
                             </Select>
                         </FormControl>
                     </Stack>
