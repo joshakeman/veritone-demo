@@ -36,7 +36,7 @@ export default function ItemList({ items }) {
             secondaryAction={
               <IconButton edge="end" aria-label="comments">
                 <ModeEditIcon />
-                <DeleteOutlineIcon />
+                <DeleteOutlineIcon sx={{ marginLeft: '20px' }}/>
               </IconButton>
             }
             sx={{
