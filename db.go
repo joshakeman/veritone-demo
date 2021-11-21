@@ -3,12 +3,15 @@ package shopping
 import (
 	"log"
 
+	_ "github.com/jinzhu/gorm/dialects/postgres"
+
 	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
 )
 
 func Connect() *gorm.DB {
-	dsn := "host=localhost user=shopping password=shopping dbname=shopping port=9920 sslmode=disable"
+	log.Println("Connecting to DB ...")
+	dsn := "host=localhost port=5432 user=scriptcomposer dbname=postgres sslmode=disable password=pass"
 	db, err := gorm.Open("postgres", dsn)
 	if err != nil {
 		log.Fatal(err)
@@ -30,6 +33,7 @@ type ItemRepo struct {
 }
 
 func NewItemRepo(db *gorm.DB) *ItemRepo {
+	log.Println("Creating new item repo ...")
 	return &ItemRepo{
 		db: db,
 	}
