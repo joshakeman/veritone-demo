@@ -2,7 +2,10 @@ import React from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import Stack from '@mui/material/Stack'
 import AddEditModal from './AddEditModal';
+import ItemList from './ItemList';
 
 export default function MainContent({ items, modal, handleOpen, handleClose }) {
     return (
@@ -27,7 +30,13 @@ export default function MainContent({ items, modal, handleOpen, handleClose }) {
                     <AddEditModal mode={modal.mode} open={modal.isOpen} handleClose={handleClose} />
                 </Box>
             ) : (
-                <p>Got Items</p>
+                <Container sx={{width:'1000px'}}>
+                    <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{marginTop: '20px',}}>
+                        <Typography variant="h6" sx={{ marginBottom: '10px'}}>Your Items</Typography>
+                        <Button onClick={() => handleOpen('ADD')} variant="contained">Add item</Button>
+                    </Stack>
+                    <ItemList items={items} />
+                </Container>
             )
         }
     </>
