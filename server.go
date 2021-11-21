@@ -18,7 +18,7 @@ func RunServer(itemRepo *ItemRepo) {
 	r.HandleFunc("/api/list-all", ListAll(itemRepo))
 	r.HandleFunc("/api/create", Create(itemRepo))
 	// r.HandleFunc("/api/update", Update)
-	// r.HandleFunc("/api/delete", Delete)
+	r.HandleFunc("/api/delete", Delete(itemRepo))
 
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:3000"},
@@ -64,4 +64,24 @@ func Create(data *ItemRepo) func(http.ResponseWriter, *http.Request) {
 
 		w.WriteHeader(200)
 	}
+}
+
+func Delete(data *ItemRepo) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var httpCreateReq UUIDReq
+		json.NewDecoder(r.Body).Decode(&httpCreateReq)
+		defer r.Body.Close()
+
+		err := data.Delete(httpCreateReq.UUID)
+
+		if err != nil {
+			w.WriteHeader(500)
+		}
+
+		w.WriteHeader(200)
+	}
+}
+
+type UUIDReq struct {
+	UUID string `json:"uuid"`
 }

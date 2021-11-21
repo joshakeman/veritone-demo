@@ -59,6 +59,26 @@ export default function ListContainer() {
         })
     }
 
+    function deleteItem(uuid) {
+        console.log(`Deleting item with uuid ${uuid}`)
+        let reqBody = {
+            uuid
+        }
+        fetch('http://localhost:8080/api/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(reqBody)
+        })
+        .then(data => {
+            // console.log("Resetting inputs and closing modal")
+            // setInputs({})
+            // setModal({
+            //     isOpen:false
+            // })
+        })
+    }
     return (
         <>
             {
@@ -66,7 +86,14 @@ export default function ListContainer() {
                 <CircularProgress sx={{marginTop:'120px'}}/>
             ) : (
                 <>
-                <MainContent items={items} modal={modal} handleOpen={handleOpen} handleClose={handleClose} />
+                <MainContent 
+                items={items} 
+                modal={modal} 
+                handleOpen={handleOpen} 
+                handleClose={handleClose} 
+                deleteItem={deleteItem} 
+                />
+
                 <AddEditModal 
                 inputs={inputs} 
                 mode={modal.mode} 

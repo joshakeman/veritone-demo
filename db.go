@@ -72,7 +72,8 @@ func (i *ItemRepo) Update(item Item) error {
 }
 
 func (i *ItemRepo) Delete(uuid string) error {
-	err := i.db.Delete(&Item{}).Where("uuid = ?", uuid).Error
+	log.Printf("Deleting item with uuid %s\n", uuid)
+	err := i.db.Where("uuid = ?", uuid).Delete(&Item{}).Error
 	if err != nil {
 		return err
 	}

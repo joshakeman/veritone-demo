@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-export default function ItemList({ items }) {
+export default function ItemList({ items, deleteItem }) {
   const [checked, setChecked] = React.useState([0]);
 
   const handleToggle = (value) => () => {
@@ -34,9 +34,9 @@ export default function ItemList({ items }) {
           <ListItem
             key={item.uuid}
             secondaryAction={
-              <IconButton edge="end" aria-label="comments">
-                <ModeEditIcon />
-                <DeleteOutlineIcon sx={{ marginLeft: '20px' }}/>
+              <IconButton onClick={() => deleteItem(item.uuid)}edge="end" aria-label="comments">
+                {/* <ModeEditIcon /> */}
+                <DeleteOutlineIcon />
               </IconButton>
             }
             sx={{
