@@ -12,7 +12,7 @@ export default function ListContainer() {
 
     useEffect(() => {
         fetchItems()
-    }, [])
+    }, [ modal ])
 
     function fetchItems() {
         setIsFetching(true)
@@ -42,6 +42,23 @@ export default function ListContainer() {
         })
     }
 
+    function createNew() {
+        fetch('http://localhost:8080/api/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(inputs)
+        })
+        .then(data => {
+            console.log("Resetting inputs and closing modal")
+            setInputs({})
+            setModal({
+                isOpen:false
+            })
+        })
+    }
+
     return (
         <>
             {
@@ -50,7 +67,14 @@ export default function ListContainer() {
             ) : (
                 <>
                 <MainContent items={items} modal={modal} handleOpen={handleOpen} handleClose={handleClose} />
-                <AddEditModal inputs={inputs} mode={modal.mode} open={modal.isOpen} handleClose={handleClose} onChangeHandler={onChangeHandler} />
+                <AddEditModal 
+                inputs={inputs} 
+                mode={modal.mode} 
+                open={modal.isOpen} 
+                handleClose={handleClose} 
+                onChangeHandler={onChangeHandler} 
+                createNew={createNew}
+                />
                 </>
             )
         }

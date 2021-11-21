@@ -48,7 +48,7 @@ function EditText() {
     )
 }
 
-export default function AddEditModal({ open, mode, handleClose, inputs, onChangeHandler }) {
+export default function AddEditModal({ open, mode, handleClose, inputs, onChangeHandler, createNew }) {
   useEffect(()=>{}, [ mode ]);
 
   return (
@@ -96,7 +96,7 @@ export default function AddEditModal({ open, mode, handleClose, inputs, onChange
                     </Stack>
                     <Stack direction="row" justifyContent="flex-end">
                         <Button onClick={handleClose} sx={{color:'black'}}>Cancel</Button>
-                        <Button variant="contained">
+                        <Button onClick={createNew} variant="contained">
                         {
                             mode === 'ADD' ? (
                                 <>Add Task</>
