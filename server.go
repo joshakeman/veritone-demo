@@ -17,7 +17,7 @@ func RunServer(itemRepo *ItemRepo) {
 
 	r.HandleFunc("/api/list-all", ListAll(itemRepo))
 	r.HandleFunc("/api/create", Create(itemRepo))
-	// r.HandleFunc("/api/update", Update)
+	r.HandleFunc("/api/update", Update(itemRepo))
 	r.HandleFunc("/api/delete", Delete(itemRepo))
 
 	c := cors.New(cors.Options{
@@ -73,6 +73,22 @@ func Delete(data *ItemRepo) func(http.ResponseWriter, *http.Request) {
 		defer r.Body.Close()
 
 		err := data.Delete(httpCreateReq.UUID)
+
+		if err != nil {
+			w.WriteHeader(500)
+		}
+
+		w.WriteHeader(200)
+	}
+}
+
+func Update(data *ItemRepo) func(http.ResponseWriter, *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var httpCreateReq Item
+		json.NewDecoder(r.Body).Decode(&httpCreateReq)
+		defer r.Body.Close()
+
+		err := data.Update(httpCreateReq)
 
 		if err != nil {
 			w.WriteHeader(500)

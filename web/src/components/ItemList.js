@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-export default function ItemList({ items, deleteItem }) {
+export default function ItemList({ items, deleteItem, setEditing, handleOpen, setInputs }) {
   const [checked, setChecked] = React.useState([0]);
 
   const handleToggle = (value) => () => {
@@ -25,6 +25,12 @@ export default function ItemList({ items, deleteItem }) {
     setChecked(newChecked);
   };
 
+  function openEditDialog(item) {
+      setEditing(item.uuid)
+      setInputs(item)
+      handleOpen()
+  }
+
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       {items.map((item) => {
@@ -34,10 +40,15 @@ export default function ItemList({ items, deleteItem }) {
           <ListItem
             key={item.uuid}
             secondaryAction={
-              <IconButton onClick={() => deleteItem(item.uuid)}edge="end" aria-label="comments">
-                {/* <ModeEditIcon /> */}
-                <DeleteOutlineIcon />
-              </IconButton>
+            <>
+                <IconButton onClick={() => openEditDialog(item)} edge="end" aria-label="comments">
+                    <ModeEditIcon /> 
+                </IconButton>
+
+                <IconButton onClick={() => deleteItem(item.uuid)}edge="end" aria-label="comments">
+                    <DeleteOutlineIcon />
+                </IconButton>
+            </>
             }
             sx={{
                 border: '1px solid lightgray',

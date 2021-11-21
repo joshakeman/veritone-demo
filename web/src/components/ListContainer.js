@@ -9,6 +9,8 @@ export default function ListContainer() {
     const [isFetching, setIsFetching] = useState(false)
     const [modal, setModal] = useState({isOpen: false, mode: ''})
     const [inputs, setInputs] = useState({})
+    const [stateToggle, setStateToggle] = useState(false)
+    const [editing, setEditing] = useState("")
 
     useEffect(() => {
         fetchItems()
@@ -72,6 +74,39 @@ export default function ListContainer() {
             body: JSON.stringify(reqBody)
         })
         .then(data => {
+            setStateToggle(!stateToggle)
+            // console.log("Resetting inputs and closing modal")
+            // setInputs({})
+            // setModal({
+            //     isOpen:false
+            // })
+        })
+    }
+
+    function editItem(item) {
+        console.log(`Editing item with uuid ${item.uuid}`)
+        console.log(item.name)
+        console.log(item.description)
+        console.log(item.amount)
+
+        setInputs(item)
+
+        let updatedItem = {
+            uuid: item.uuid,
+            name: item.name,
+            description: item.description,
+            amount: item.amount
+        }
+        fetch('http://localhost:8080/api/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedItem)
+        })
+        .then(data => {
+            setEditing("")
+            handleClose()
             // console.log("Resetting inputs and closing modal")
             // setInputs({})
             // setModal({
@@ -87,20 +122,22 @@ export default function ListContainer() {
             ) : (
                 <>
                 <MainContent 
-                items={items} 
-                modal={modal} 
-                handleOpen={handleOpen} 
-                handleClose={handleClose} 
-                deleteItem={deleteItem} 
+                    items={items} 
+                    modal={modal} 
+                    handleOpen={handleOpen} 
+                    handleClose={handleClose} 
+                    deleteItem={deleteItem}
+                    setEditing={setEditing}
+                    setInputs={setInputs}
                 />
-
                 <AddEditModal 
-                inputs={inputs} 
-                mode={modal.mode} 
-                open={modal.isOpen} 
-                handleClose={handleClose} 
-                onChangeHandler={onChangeHandler} 
-                createNew={createNew}
+                    inputs={inputs} 
+                    mode={modal.mode} 
+                    open={modal.isOpen} 
+                    handleClose={handleClose} 
+                    onChangeHandler={onChangeHandler} 
+                    createNew={createNew}
+                    editItem={editItem} 
                 />
                 </>
             )

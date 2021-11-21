@@ -6,7 +6,7 @@ import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
 import ItemList from './ItemList';
 
-export default function MainContent({ items, modal, handleOpen, handleClose, deleteItem }) {
+export default function MainContent({ items, modal, handleOpen, handleClose, deleteItem, editItem, setEditing, setInputs }) {
     return (
         <>
         {
@@ -33,7 +33,7 @@ export default function MainContent({ items, modal, handleOpen, handleClose, del
                         <Typography variant="h6" sx={{ marginBottom: '10px'}}>Your Items</Typography>
                         <Button onClick={() => handleOpen('ADD')} variant="contained">Add item</Button>
                     </Stack>
-                    <ItemList items={items} deleteItem={deleteItem} />
+                    <ItemList items={items} editItem={editItem} deleteItem={deleteItem} setEditing={setEditing} handleOpen={handleOpen} setInputs={setInputs} />
                 </Container>
             )
         }
