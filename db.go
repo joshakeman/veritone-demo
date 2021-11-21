@@ -3,6 +3,7 @@ package shopping
 import (
 	"log"
 
+	"github.com/google/uuid"
 	"github.com/jinzhu/gorm"
 )
 
@@ -43,4 +44,33 @@ func (i *ItemRepo) ListAll() ([]Item, error) {
 	}
 
 	return items, nil
+}
+
+func (i *ItemRepo) Create(item Item) error {
+	item.UUID = uuid.New().String()
+
+	err := i.db.Create(&item).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (i *ItemRepo) Update(item Item) error {
+	err := i.db.Model(&Item{}).Where("uuid = ?", item.UUID).Updates(&item).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (i *ItemRepo) Delete(uuid string) error {
+	err := i.db.Delete(&Item{}).Where("uuid = ?", uuid).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
