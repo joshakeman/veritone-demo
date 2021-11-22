@@ -3,18 +3,20 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import MainContent from './MainContent'
 import AddEditModal from './AddEditModal';
+import DeleteModalComp from './DeleteModal';
 
 export default function ListContainer() {
     const [items, setItems] = useState([])
     const [isFetching, setIsFetching] = useState(false)
     const [modal, setModal] = useState({isOpen: false, mode: ''})
+    const [deleteModal, setDeleteModal] = useState(false)
     const [inputs, setInputs] = useState({})
-    const [stateToggle, setStateToggle] = useState(false)
     const [editing, setEditing] = useState("")
+    const [deleteId, setDeleteId] = useState("")
 
     useEffect(() => {
         fetchItems()
-    }, [ modal ])
+    }, [ modal, deleteId, editing ])
 
     function fetchItems() {
         setIsFetching(true)
@@ -74,7 +76,7 @@ export default function ListContainer() {
             body: JSON.stringify(reqBody)
         })
         .then(data => {
-            setStateToggle(!stateToggle)
+            setDeleteId("")
             // console.log("Resetting inputs and closing modal")
             // setInputs({})
             // setModal({
@@ -85,10 +87,6 @@ export default function ListContainer() {
 
     function editItem(item) {
         console.log(`Editing item with uuid ${item.uuid}`)
-        console.log(item.name)
-        console.log(item.description)
-        console.log(item.amount)
-
         setInputs(item)
 
         let updatedItem = {
@@ -129,6 +127,8 @@ export default function ListContainer() {
                     deleteItem={deleteItem}
                     setEditing={setEditing}
                     setInputs={setInputs}
+                    setDeleteModal={setDeleteModal}
+                    setDeleteId={setDeleteId}
                 />
                 <AddEditModal 
                     inputs={inputs} 
@@ -139,6 +139,11 @@ export default function ListContainer() {
                     createNew={createNew}
                     editItem={editItem} 
                 />
+                <DeleteModalComp 
+                deleteId={deleteId} 
+                deleteItem={deleteItem} 
+                setDeleteModal={setDeleteModal} 
+                open={deleteModal} />
                 </>
             )
         }
