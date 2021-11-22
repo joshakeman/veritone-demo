@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
-import Container from '@mui/material/Container';
+import InputLabel from '@mui/material/InputLabel';
 import Modal from '@mui/material/Modal';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
@@ -79,11 +79,13 @@ export default function AddEditModal({ open, mode, handleClose, inputs, onChange
                         <TextField value={inputs.name} name="name" onChange={onChangeHandler} sx={{ margin: '8px 0 '}} label="Item name" variant="outlined" />
                         <TextField value={inputs.description} name="description" onChange={onChangeHandler} sx={{ margin: '8px 0 '}} label="Description" variant="outlined" multiline minRows={4}/>
                         <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">How many?</InputLabel>
                             <Select
+                            label="How many?"
                             sx={{ margin: '8px 0 '}}
                             name="amount"
                             value={inputs.amount}
-                            label="How many?"
+                            value={inputs.amount}
                             onChange={onChangeHandler}
                             >
                             <MenuItem value={1}>1</MenuItem>
